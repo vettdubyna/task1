@@ -60,5 +60,3 @@ def create_aws_config():
 
     except Exception as e:
         print "Error " + str(e)
-
-create_aws_config()

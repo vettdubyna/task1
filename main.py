@@ -1,30 +1,27 @@
 #!/usr/bin/python
 
 from fabric.api import *
-#from aws_actions import *
+from aws_actions.create_aws_resources import *
+from aws_actions.create_aws_files import *
+from scripts.prepare import *
 import os
 import sys
-import ConfigParser
-import io
-
-def get_params():
-    try:
-        params = {}
-        with open("config/configuration.ini", "r") as f:
-            sample_conf = f.read()
-        print sample_conf
-        #
-        config = ConfigParser.RawConfigParser(allow_no_value=True)
-        config.readfp(io.BytesIO(sample_conf))
-        for section in config.sections():
-            for options in config.options(section):
-                params[options] = config.get(section, options)
-        return params
-    except Exception as e:
-        print "oops"
-        return ''
 
 if __name__ == "__main__":
-    ec2_params = {}
-    ec2_params = get_params()
-    print ec2_params
+    try:
+        ec2_params = {}
+        ec2_params = set_params()
+        #print ec2_params
+        print "Creating AWS Files: "
+        create_aws_config()
+        print "Creating EC2 Instance: "
+        #instance_id = create_ec2_instance(ec2_params, "MyTag")
+        #print "Instance ID = " + instance_id
+        print "Creating S3 bucket: "
+        bucket_name = raw_input("Please type-in your bucket name: ")
+        tags = {}
+        tags["Key"] = "Name"
+        tags["Value"] = "task1-bucket-name-vd"
+        print "Bucket " + create_s3(bucket_name, tags, ec2_params["region"]) + "has been created!"
+    except Exception as e:
+        raise

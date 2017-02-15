@@ -27,13 +27,13 @@ def overwrite(conf_path="../config/creds"):
         local("mkdir -p " + aws_dir + " 2>&1", capture=True)
         local("cp " + conf_path + " " + aws_dir + "/credentials")
         local("chmod 600 " + aws_dir + "/*"+" 2>&1", capture=True)
-        local("chmod 550 " + aws_dir +" 2>&1", capture=True)
+        local("chmod 750 " + aws_dir +" 2>&1", capture=True)
     except Exception as e:
         print "Error" + str(e)
 
 def check_dir_excist():
     try:
-        if (os.pathself.exists("/home/" + os.getlogin() + "/.aws1")) == False:
+        if (os.path.exists("/home/" + os.getlogin() + "/.aws1")) == False:
             print "File doesn't exists! Please ru-run script"
             raise Exception
         else:
@@ -42,7 +42,7 @@ def check_dir_excist():
         print "Error" + str(e)
 
 #Create AWS config files in .aws
-def create_aws_config():
+def create_aws_config(path_to_creds="config/creds"):
     try:
         print "1. Input manually"
         print "2. Use conf.ini"
@@ -51,7 +51,7 @@ def create_aws_config():
         if choise == 1:
             manual_input()
         elif choise == 2:
-            overwrite()
+            overwrite(path_to_creds)
         elif choise == 3:
             check_dir_excist()
         else:

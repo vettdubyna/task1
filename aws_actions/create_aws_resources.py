@@ -4,7 +4,7 @@ from fabric.api import *
 import boto3
 import os
 
-def create_ec2_instance(params, instance_tag):
+def create_ec2_instance(params, instance_tag, role):
     try:
         ec2 = boto3.resource('ec2')
         security_group_id = []
@@ -17,7 +17,8 @@ def create_ec2_instance(params, instance_tag):
                                         KeyName = key_name,
                                         SecurityGroupIds = security_group_id,
                                         InstanceType = instance_type,
-                                        SubnetId = subnet_id
+                                        SubnetId = subnet_id,
+                                        IamInstanceProfile={'Name': role}
                                         )
         print "Waiting for instance become running"
         for instance in instances:

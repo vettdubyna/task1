@@ -37,19 +37,17 @@ if __name__ == "__main__":
         tags = {}
         tags["Key"] = "Name"
         tags["Value"] = bucket_name
-        #print "Bucket " + create_s3(bucket_name, tags, ec2_params["region"]) + "has been created!"
+        print "Bucket " + create_s3(bucket_name, tags, ec2_params["region"]) + "has been created!"
         print "Putting file to S3: "
-        #if put_in_s3(bucket_name) == True:
-        #    print "Done!"
-        #else:
-        #    print "Fail!"
+        if put_in_s3(bucket_name) == True:
+            print "Done!"
+        else:
+            print "Fail!"
         print "Creating EC2 Role: "
         role_profile = base_name + '-profile'
         print create_iam_role(bucket_name, role_profile)
         print "Creating EC2 Instance: "
         instance_id = create_ec2_instance(ec2_params, base_name, role_profile)
-        print "Preparing instance..."
-        time.sleep(10)
         print "Instance ID = " + instance_id
         print "Configuring NGINX on instance: "
         ip_addr = get_ec2_ip(instance_id)

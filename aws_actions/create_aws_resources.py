@@ -64,13 +64,13 @@ def generate_json_policy(bucket_name):
         sys.exit(1)
 
 def create_iam_role(bucket_name, role_profile):
-    conn = boto3.client('iam')
-    role_name = "Allow_actions_s3"
-    policy_name = "Policy_Allow_Access_S3"
-    document = ''
-    with open(generate_json_policy(bucket_name), 'r') as myfile:
-        document = myfile.read()
     try:
+        conn = boto3.client('iam')
+        role_name = "Allow_actions_s3"
+        policy_name = "Policy_Allow_Access_S3"
+        document = ''
+        with open(generate_json_policy(bucket_name), 'r') as myfile:
+            document = myfile.read()
         role = conn.create_role(RoleName=role_name, AssumeRolePolicyDocument='{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":["ec2.amazonaws.com"]},"Action":["sts:AssumeRole"]}]}')
         conn.put_role_policy(RoleName=role_name, PolicyName=policy_name, PolicyDocument=document)
         instance_profile = conn.create_instance_profile(InstanceProfileName=role_profile)

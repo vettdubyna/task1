@@ -15,6 +15,7 @@ def configuring_web_site(ip_addr, user, key, bucket_name):
         env.key_filename = [key]
         env.host_string = user + '@' + ip_addr
         sudo('aws s3 cp s3://' + bucket_name + '/index.html /usr/share/nginx/html/index.html')
+        sudo('echo "<h1> Working directory is: $PWD </h1>" > /usr/share/nginx/html/index.html')
         print "Restarting nginx..."
         sudo('systemctl restart nginx.service')
     except Exception as e:

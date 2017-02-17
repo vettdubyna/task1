@@ -51,7 +51,7 @@ if __name__ == "__main__":
         role_profile = base_name + '-profile'
         print create_iam_role(bucket_name, role_profile)
         print_headers("Creating EC2 Instance")
-        instance_id = create_ec2_instance(ec2_params, base_name, role_profile)
+        instance_id = "i-0e0c178f6f76607ab"#create_ec2_instance(ec2_params, base_name, role_profile)
         print "Instance ID = " + instance_id
         print_headers("Configuring NGINX on instance")
         ip_addr = get_ec2_ip(instance_id)

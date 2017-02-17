@@ -7,7 +7,7 @@ import shutil
 def manual_input():
     try:
         aws_key_id = raw_input("Please enter your AWS KEY ID: ")
-        aws_secret_key = raw_input("Please enter your AWS KEY ID: ")
+        aws_secret_key = raw_input("Please enter your AWS SECRET KEY: ")
         aws_dir = "/home/" + os.getlogin() + "/.aws1"
         local("rm -rf " + aws_dir + " 2>&1", capture=True)
         local("mkdir -p " + aws_dir + " 2>&1", capture=True)
@@ -16,7 +16,7 @@ def manual_input():
             aws_cred.write("aws_access_key_id = %s\n" %aws_key_id)
             aws_cred.write("aws_secret_access_key = %s\n" %aws_secret_key)
         local("chmod 600 " + aws_dir + "/*"+" 2>&1", capture=True)
-        local("chmod 550 " + aws_dir +" 2>&1", capture=True)
+        local("chmod 750 " + aws_dir +" 2>&1", capture=True)
     except Exception as e:
         print "Error" + str(e)
 

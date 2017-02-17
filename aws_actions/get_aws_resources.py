@@ -3,6 +3,7 @@
 from fabric.api import *
 import boto3
 import os
+import sys
 
 def get_ec2_ip(instance_id):
     try:
@@ -13,6 +14,7 @@ def get_ec2_ip(instance_id):
             return getattr(instance, 'public_dns_name')
     except Exception as e:
         print "Error: " + str(e)
+        sys.exit(1)
 
 def put_in_s3(bucket_name):
     try:
@@ -24,3 +26,4 @@ def put_in_s3(bucket_name):
         return True
     except Exception as e:
         print "Error: " + str(e)
+        sys.exit(1)

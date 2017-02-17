@@ -9,10 +9,8 @@ from fabric.api import env, run
 import os
 import sys
 
-def configure_instance(ip_addr, user, key):
+def preparing_instance(ip_addr, user, key):
     try:
-    #    with (settings(host_string=ip_addr, user=user, key_filename=key)):
-            #insalling nginx
         env['connection_attempts'] = 100
         env.key_filename = [key]
         env.host_string = user + '@' + ip_addr
